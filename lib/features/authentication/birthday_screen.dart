@@ -15,6 +15,7 @@ class BirthdayScreen extends StatefulWidget {
 class _BirthdayScreenState extends State<BirthdayScreen> {
   final TextEditingController _birthdayController = TextEditingController();
 
+  // TODO: 오늘 날짜가 아닌 12년전으로 수정
   DateTime initialDate = DateTime.now();
 
   @override
@@ -35,10 +36,9 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
     ).push(MaterialPageRoute(builder: (context) => const InterestsScreen()));
   }
 
+  //날짜 컨트롤러에 할당해주기
   void _setTextFieldDate(DateTime date) {
-    //오늘 날짜를 추출해서 문자열로 만들기
     final textDate = date.toString().split(" ").first;
-    //컨트롤러에 오늘 날짜 할당하기
     _birthdayController.value = TextEditingValue(text: textDate);
   }
 
