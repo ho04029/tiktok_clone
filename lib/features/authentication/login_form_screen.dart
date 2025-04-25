@@ -13,6 +13,12 @@ class LoginFormScreen extends StatefulWidget {
 class _LoginFormScreenState extends State<LoginFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  void _onSubmitTap() {
+    if (_formKey.currentState != null) {
+      _formKey.currentState!.validate();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,13 +32,23 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
               Gaps.v28,
               TextFormField(
                 decoration: const InputDecoration(hintText: "Email"),
+                //여기서 value는 textForm의 값이 될 거임
+                validator: (value) {
+                  return "hmm";
+                },
               ),
               Gaps.v16,
               TextFormField(
                 decoration: const InputDecoration(hintText: "Password"),
+                validator: (value) {
+                  return "hmm";
+                },
               ),
               Gaps.v28,
-              FormButton(disabled: false),
+              GestureDetector(
+                onTap: _onSubmitTap,
+                child: FormButton(disabled: false),
+              ),
             ],
           ),
         ),
