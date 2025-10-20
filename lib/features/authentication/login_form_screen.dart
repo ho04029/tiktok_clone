@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/widgets/from_button.dart';
+import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 
 class LoginFormScreen extends StatefulWidget {
   const LoginFormScreen({super.key});
@@ -12,10 +13,17 @@ class LoginFormScreen extends StatefulWidget {
 
 class _LoginFormScreenState extends State<LoginFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Map<String, String> formData = {};
 
   void _onSubmitTap() {
     if (_formKey.currentState != null) {
-      _formKey.currentState!.validate();
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
+
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const InterestsScreen()),
+        );
+      }
     }
   }
 
@@ -32,22 +40,29 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
               Gaps.v28,
               TextFormField(
                 decoration: const InputDecoration(hintText: "Email"),
-                //여기서 value는 textForm의 값이 될 거임
                 validator: (value) {
-                  return "hmm";
+                  return null;
                 },
+                onSaved:
+                    (newValue) => {
+                      if (newValue != null) {formData['email'] = newValue},
+                    },
               ),
               Gaps.v16,
               TextFormField(
                 decoration: const InputDecoration(hintText: "Password"),
                 validator: (value) {
-                  return "hmm";
+                  return null;
                 },
+                onSaved:
+                    (newValue) => {
+                      if (newValue != null) {formData['password'] = newValue},
+                    },
               ),
               Gaps.v28,
               GestureDetector(
                 onTap: _onSubmitTap,
-                child: FormButton(disabled: false),
+                child: FormButton(disabled: false, text: "Log in"),
               ),
             ],
           ),
