@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
 enum Direction { right, left }
+
+enum Page { first, second }
 
 class TutorialScreen extends StatefulWidget {
   const TutorialScreen({super.key});
@@ -13,6 +16,7 @@ class TutorialScreen extends StatefulWidget {
 
 class _TutorialScreenState extends State<TutorialScreen> {
   Direction _direction = Direction.right;
+  Page _showingPage = Page.first;
 
   void _onPanUpdate(DragUpdateDetails details) {
     if (details.delta.dx > 0) {
@@ -26,7 +30,17 @@ class _TutorialScreenState extends State<TutorialScreen> {
     }
   }
 
-  void _onPanEnd(DragEndDetails detail) {}
+  void _onPanEnd(DragEndDetails detail) {
+    if (_direction == Direction.left) {
+      setState(() {
+        _showingPage = Page.second;
+      });
+    } else {
+      setState(() {
+        _showingPage = Page.first;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +83,36 @@ class _TutorialScreenState extends State<TutorialScreen> {
                   ),
                   Gaps.v16,
                   Text(
-                    "Videos are personalized for you based on what you watch, like, and share.",
+                    "Take care of one another!",
                     style: TextStyle(fontSize: Sizes.size20),
                   ),
                 ],
               ),
-              crossFadeState: CrossFadeState.showFirst,
+              crossFadeState:
+                  _showingPage == Page.first
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
               duration: Duration(milliseconds: 300),
+            ),
+          ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: Sizes.size24,
+              horizontal: Sizes.size24,
+            ),
+            child: AnimatedOpacity(
+              duration: Duration(microseconds: 300),
+              opacity: _showingPage == Page.first ? 0 : 1,
+              child: CupertinoButton(
+                onPressed: () {},
+                color: Theme.of(context).primaryColor,
+                child: Text(
+                  'Enter the app!',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             ),
           ),
         ),
