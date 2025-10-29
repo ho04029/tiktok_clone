@@ -31,9 +31,10 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (context) => const InterestsScreen()));
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => const InterestsScreen()),
+      (route) => false,
+    );
   }
 
   //날짜 컨트롤러에 할당해주기
