@@ -76,7 +76,7 @@ class SignUpScreen extends StatelessWidget {
                   "Log in",
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),

@@ -8,10 +8,16 @@ class MainNavigationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Theme.of(context).colorScheme.primary,
         items: [
           BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.house),
             label: "Home",
+            tooltip: "What are you?",
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
+            label: "Search",
             tooltip: "What are you?",
           ),
         ],

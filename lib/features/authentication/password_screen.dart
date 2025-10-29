@@ -120,7 +120,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                     borderSide: BorderSide(color: Colors.grey),
                   ),
                 ),
-                cursorColor: Theme.of(context).primaryColor,
+                cursorColor: Theme.of(context).colorScheme.primary,
               ),
               Gaps.v10,
               Row(

@@ -158,7 +158,9 @@ class _InterestsScreenState extends State<InterestsScreen> {
             onTap: _onNextTap,
             child: Container(
               padding: EdgeInsets.symmetric(vertical: Sizes.size20),
-              decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+              ),
               child: const Text(
                 "Next",
                 textAlign: TextAlign.center,
