@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/nav_tab.dart';
+import 'package:tiktok_clone/features/main_navigation/widgets/post_video_button.dart';
+import 'package:tiktok_clone/features/video/video_timeline_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -20,12 +22,21 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     });
   }
 
+  void _onPostVideoButtonTap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Container(),
+        fullscreenDialog: true,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          Offstage(offstage: _selectedIdx != 0, child: Column()),
+          Offstage(offstage: _selectedIdx != 0, child: VideoTimelineScreen()),
           Offstage(offstage: _selectedIdx != 1, child: Column()),
           Offstage(offstage: _selectedIdx != 1, child: Column()),
           Offstage(offstage: _selectedIdx != 1, child: Column()),
@@ -53,31 +64,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               onTab: () => _onTap(1),
             ),
             Gaps.h24,
-            Stack(
-              children: [
-                Positioned(
-                  child: Container(
-                    height: 30,
-                    width: 25,
-                    padding: EdgeInsets.symmetric(horizontal: Sizes.size8),
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(Sizes.size11),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  child: Container(
-                    height: 30,
-                    width: 25,
-                    padding: EdgeInsets.symmetric(horizontal: Sizes.size8),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(Sizes.size11),
-                    ),
-                  ),
-                ),
-              ],
+            GestureDetector(
+              onTap: _onPostVideoButtonTap,
+              child: PostVideoButton(),
             ),
             Gaps.h24,
             NavTab(
