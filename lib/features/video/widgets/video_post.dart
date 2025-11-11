@@ -74,6 +74,9 @@ class _VideoPostState extends State<VideoPost>
       if (kIsWeb) _videoPlayerController.setVolume(0);
       _videoPlayerController.play();
     }
+    if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
+      _onTogglePause();
+    }
   }
 
   void _onTogglePause() {
