@@ -20,7 +20,9 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           horizontalTitleGap: Sizes.size8,
           leading: CircleAvatar(
             radius: Sizes.size24,
-            foregroundImage: NetworkImage(""),
+            foregroundImage: NetworkImage(
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsv_pZL9XVHMiLKMnV89B1LauRL2t1nis-LeK96R_yOtlAjBF8s1LSpMJHVPoFFrq1wlg&usqp=CAU",
+            ),
             child: Text("user"),
           ),
           title: Text("user", style: TextStyle(fontWeight: FontWeight.w600)),
