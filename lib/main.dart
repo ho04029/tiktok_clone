@@ -16,6 +16,7 @@ class TiktokApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'TiktokApp',
       theme: ThemeData(
         colorScheme: ColorScheme(
@@ -47,7 +48,7 @@ class TiktokApp extends StatelessWidget {
           ),
         ),
       ),
-      home: MainNavigationScreen(),
+      home: SignUpScreen(),
     );
   }
 }

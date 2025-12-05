@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -69,6 +70,54 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           onPressed: () => Navigator.of(context).pop(),
                           isDestructiveAction: true,
                           child: Text("Yes"),
+                        ),
+                      ],
+                    ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text("Log out (AOS)"),
+            textColor: Colors.red,
+            onTap: () {
+              showDialog(
+                context: context,
+                builder:
+                    (context) => AlertDialog(
+                      title: Text("Are you sure?"),
+                      content: Text("Plz dont go"),
+                      actions: [
+                        IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: FaIcon(FontAwesomeIcons.car),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: Text("Yes"),
+                        ),
+                      ],
+                    ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text("Log out (iOS/Bottom)"),
+            textColor: Colors.red,
+            onTap: () {
+              showCupertinoModalPopup(
+                context: context,
+                builder:
+                    (context) => CupertinoActionSheet(
+                      title: Text("Are you sure?"),
+                      actions: [
+                        CupertinoActionSheetAction(
+                          onPressed: () {},
+                          child: Text("Not log out"),
+                        ),
+                        CupertinoActionSheetAction(
+                          isDefaultAction: true,
+                          onPressed: () {},
+                          child: Text("Yes plz"),
                         ),
                       ],
                     ),
