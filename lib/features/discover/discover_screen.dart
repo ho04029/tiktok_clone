@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/breakpoint.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
@@ -24,6 +25,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
@@ -56,73 +58,80 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               itemCount: 20,
               padding: EdgeInsets.symmetric(horizontal: Sizes.size6),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+                crossAxisCount: width > Breakpoints.lg ? 5 : 2,
                 crossAxisSpacing: Sizes.size10,
                 mainAxisSpacing: Sizes.size10,
                 childAspectRatio: 9 / 20,
               ),
               itemBuilder:
-                  (context, index) => Column(
-                    children: [
-                      Container(
-                        clipBehavior: Clip.hardEdge,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(Sizes.size4),
-                        ),
-                        child: AspectRatio(
-                          aspectRatio: 9 / 16,
-                          child: FadeInImage.assetNetwork(
-                            fit: BoxFit.cover,
-                            placeholder: "assets/image/placeholder.jpg",
-                            image:
-                                "https://images.unsplash.com/photo-1673844969019-c99b0c933e90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80",
-                          ),
-                        ),
-                      ),
-                      Gaps.v10,
-                      Text(
-                        "This is a very long caption for my tiktok that im upload just now currently.",
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        style: TextStyle(
-                          fontSize: Sizes.size16 + Sizes.size2,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Gaps.v8,
-                      DefaultTextStyle(
-                        style: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        child: Row(
+                  (context, index) => LayoutBuilder(
+                    builder:
+                        (context, constraint) => Column(
                           children: [
-                            CircleAvatar(
-                              radius: 12,
-                              backgroundImage: NetworkImage(
-                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsv_pZL9XVHMiLKMnV89B1LauRL2t1nis-LeK96R_yOtlAjBF8s1LSpMJHVPoFFrq1wlg&usqp=CAU",
+                            Container(
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                  Sizes.size4,
+                                ),
+                              ),
+                              child: AspectRatio(
+                                aspectRatio: 9 / 16,
+                                child: FadeInImage.assetNetwork(
+                                  fit: BoxFit.cover,
+                                  placeholder: "assets/image/placeholder.jpg",
+                                  image:
+                                      "https://images.unsplash.com/photo-1673844969019-c99b0c933e90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80",
+                                ),
                               ),
                             ),
-                            Gaps.h4,
-                            Expanded(
-                              child: Text(
-                                "user",
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                            Gaps.v10,
+                            Text(
+                              "This is a very long caption for my tiktok that im upload just now currently.",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: TextStyle(
+                                fontSize: Sizes.size16 + Sizes.size2,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Gaps.h4,
-                            FaIcon(
-                              FontAwesomeIcons.heart,
-                              size: Sizes.size16,
-                              color: Colors.grey.shade600,
-                            ),
-                            Gaps.h2,
-                            Text("2.5M"),
+                            Gaps.v8,
+                            if (constraint.maxWidth < 200 ||
+                                constraint.maxWidth > 250)
+                              DefaultTextStyle(
+                                style: TextStyle(
+                                  color: Colors.grey.shade600,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                child: Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 12,
+                                      backgroundImage: NetworkImage(
+                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsv_pZL9XVHMiLKMnV89B1LauRL2t1nis-LeK96R_yOtlAjBF8s1LSpMJHVPoFFrq1wlg&usqp=CAU",
+                                      ),
+                                    ),
+                                    Gaps.h4,
+                                    Expanded(
+                                      child: Text(
+                                        "user",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    Gaps.h4,
+                                    FaIcon(
+                                      FontAwesomeIcons.heart,
+                                      size: Sizes.size16,
+                                      color: Colors.grey.shade600,
+                                    ),
+                                    Gaps.h2,
+                                    Text("2.5M"),
+                                  ],
+                                ),
+                              ),
                           ],
                         ),
-                      ),
-                    ],
                   ),
             ),
             for (var tab in tabs.skip(1))
