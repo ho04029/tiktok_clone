@@ -22,6 +22,7 @@ class TiktokApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TiktokApp',
+      themeMode: ThemeMode.system,
       theme: ThemeData(
         colorScheme: ColorScheme(
           brightness: Brightness.light,
@@ -52,7 +53,21 @@ class TiktokApp extends StatelessWidget {
           ),
         ),
       ),
-      home: MainNavigationScreen(),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme(
+          brightness: Brightness.dark,
+          primary: Color(0xFFE9435A),
+          onPrimary: Colors.white,
+          secondary: Color(0xFF0066FF),
+          onSecondary: Colors.white,
+          error: Colors.red,
+          onError: Colors.white,
+          surface: Colors.white,
+          onSurface: Colors.white,
+        ),
+        scaffoldBackgroundColor: Colors.black,
+      ),
+      home: SignUpScreen(),
     );
   }
 }
