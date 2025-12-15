@@ -29,10 +29,7 @@ class LoginScreen extends StatelessWidget {
               Gaps.v80,
               Text(
                 "Log in to TikTok",
-                style: TextStyle(
-                  fontSize: Sizes.size24,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
               Gaps.v20,
               Text(
