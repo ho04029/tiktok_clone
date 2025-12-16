@@ -48,7 +48,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               fontWeight: FontWeight.w600,
               fontSize: Sizes.size16,
             ),
-            indicatorColor: Colors.black,
+
             labelColor: Colors.black,
             unselectedLabelColor: Colors.grey.shade500,
             tabs: [for (var tab in tabs) Tab(text: tab)],
