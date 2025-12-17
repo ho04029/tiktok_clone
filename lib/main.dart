@@ -61,6 +61,7 @@ class TiktokApp extends StatelessWidget {
         ),
       ),
       darkTheme: ThemeData(
+        indicatorColor: Colors.white,
         textTheme: Typography.whiteMountainView,
         colorScheme: ColorScheme(
           brightness: Brightness.dark,

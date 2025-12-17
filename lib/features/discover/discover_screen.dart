@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/breakpoint.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 
 final tabs = ["Top", "Users", "Videos", "Sounds", "LIVE", "Shopping", "Brands"];
 
@@ -24,6 +25,12 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
   void _onSearchSubmitted(String value) {}
 
   @override
+  void dispose() {
+    _textEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return DefaultTabController(
@@ -32,25 +39,26 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 1,
-          title: Container(
-            constraints: BoxConstraints(maxWidth: Breakpoints.sm),
+          title: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: Breakpoints.sm),
             child: CupertinoSearchTextField(
               controller: _textEditingController,
               onChanged: _onSearchChanged,
               onSubmitted: _onSearchSubmitted,
+              style: TextStyle(
+                color: isDarkMode(context) ? Colors.white : Colors.black,
+              ),
             ),
           ),
           bottom: TabBar(
             splashFactory: NoSplash.splashFactory,
-            padding: EdgeInsets.symmetric(horizontal: Sizes.size16),
+            padding: const EdgeInsets.symmetric(horizontal: Sizes.size16),
             isScrollable: true,
-            labelStyle: TextStyle(
+            labelStyle: const TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: Sizes.size16,
             ),
-
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.grey.shade500,
+            indicatorColor: Theme.of(context).tabBarTheme.indicatorColor,
             tabs: [for (var tab in tabs) Tab(text: tab)],
           ),
         ),
@@ -59,7 +67,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             GridView.builder(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               itemCount: 20,
-              padding: EdgeInsets.symmetric(horizontal: Sizes.size6),
+              padding: const EdgeInsets.all(Sizes.size10),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: width > Breakpoints.lg ? 5 : 2,
                 crossAxisSpacing: Sizes.size10,
@@ -69,7 +77,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               itemBuilder:
                   (context, index) => LayoutBuilder(
                     builder:
-                        (context, constraint) => Column(
+                        (context, constraints) => Column(
                           children: [
                             Container(
                               clipBehavior: Clip.hardEdge,
@@ -89,7 +97,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                               ),
                             ),
                             Gaps.v10,
-                            Text(
+                            const Text(
                               "This is a very long caption for my tiktok that im upload just now currently.",
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
@@ -99,46 +107,48 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                               ),
                             ),
                             Gaps.v8,
-                            if (constraint.maxWidth < 200 ||
-                                constraint.maxWidth > 250)
-                              DefaultTextStyle(
-                                style: TextStyle(
-                                  color: Colors.grey.shade600,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                child: Row(
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 12,
-                                      backgroundImage: NetworkImage(
-                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsv_pZL9XVHMiLKMnV89B1LauRL2t1nis-LeK96R_yOtlAjBF8s1LSpMJHVPoFFrq1wlg&usqp=CAU",
-                                      ),
-                                    ),
-                                    Gaps.h4,
-                                    Expanded(
-                                      child: Text(
-                                        "user",
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    Gaps.h4,
-                                    FaIcon(
-                                      FontAwesomeIcons.heart,
-                                      size: Sizes.size16,
-                                      color: Colors.grey.shade600,
-                                    ),
-                                    Gaps.h2,
-                                    Text("2.5M"),
-                                  ],
-                                ),
+                            //if (constraints.maxWidth < 200 ||   constraints.maxWidth > 250)
+                            DefaultTextStyle(
+                              style: TextStyle(
+                                color:
+                                    isDarkMode(context)
+                                        ? Colors.grey.shade300
+                                        : Colors.grey.shade600,
+                                fontWeight: FontWeight.w600,
                               ),
+                              child: Row(
+                                children: [
+                                  const CircleAvatar(
+                                    radius: 12,
+                                    backgroundImage: NetworkImage(
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsv_pZL9XVHMiLKMnV89B1LauRL2t1nis-LeK96R_yOtlAjBF8s1LSpMJHVPoFFrq1wlg&usqp=CAU",
+                                    ),
+                                  ),
+                                  Gaps.h4,
+                                  const Expanded(
+                                    child: Text(
+                                      "My avatar is going to be very long",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  Gaps.h4,
+                                  FaIcon(
+                                    FontAwesomeIcons.heart,
+                                    size: Sizes.size16,
+                                    color: Colors.grey.shade600,
+                                  ),
+                                  Gaps.h2,
+                                  const Text("2.5M"),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                   ),
             ),
             for (var tab in tabs.skip(1))
-              Center(child: Text(tab, style: TextStyle(fontSize: 28))),
+              Center(child: Text(tab, style: const TextStyle(fontSize: 28))),
           ],
         ),
       ),
