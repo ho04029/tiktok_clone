@@ -172,17 +172,26 @@ class _VideoCommentsState extends State<VideoComments> {
                                     children: [
                                       FaIcon(
                                         FontAwesomeIcons.at,
-                                        color: Colors.grey.shade900,
+                                        color:
+                                            isDark
+                                                ? Colors.grey.shade500
+                                                : Colors.grey.shade900,
                                       ),
                                       Gaps.h14,
                                       FaIcon(
                                         FontAwesomeIcons.gift,
-                                        color: Colors.grey.shade900,
+                                        color:
+                                            isDark
+                                                ? Colors.grey.shade500
+                                                : Colors.grey.shade900,
                                       ),
                                       Gaps.h14,
                                       FaIcon(
                                         FontAwesomeIcons.faceSmile,
-                                        color: Colors.grey.shade900,
+                                        color:
+                                            isDark
+                                                ? Colors.grey.shade500
+                                                : Colors.grey.shade900,
                                       ),
                                       Gaps.h14,
                                       if (_isWriting)

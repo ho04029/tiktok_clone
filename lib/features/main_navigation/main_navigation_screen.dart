@@ -18,7 +18,7 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIdx = 0;
+  int _selectedIdx = 2;
 
   void _onTap(int index) {
     setState(() {
@@ -40,7 +40,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     final isDark = isDarkMode(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: _selectedIdx == 0 ? Colors.black : Colors.white,
+      backgroundColor:
+          _selectedIdx == 0 || isDark ? Colors.black : Colors.white,
       body: Stack(
         children: [
           Offstage(offstage: _selectedIdx != 0, child: VideoTimelineScreen()),
