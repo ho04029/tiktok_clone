@@ -93,7 +93,10 @@ class SignUpScreen extends StatelessWidget {
             color: isDarkMode(context) ? null : Colors.grey.shade50,
             elevation: 2,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: Sizes.size10),
+              padding: const EdgeInsets.only(
+                top: Sizes.size32,
+                bottom: Sizes.size64,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
