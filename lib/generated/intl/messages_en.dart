@@ -26,7 +26,18 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "alreadyHaveAnAccount": MessageLookupByLibrary.simpleMessage(
+      "Already have an account?",
+    ),
+    "appleButton": MessageLookupByLibrary.simpleMessage("Continue with Apple"),
+    "emailPasswordButton": MessageLookupByLibrary.simpleMessage(
+      "Use email & password",
+    ),
+    "logIn": MessageLookupByLibrary.simpleMessage("Log in"),
     "loginTitle": m0,
+    "signUpSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Create a profile, follow other accounts, make your own videos, and more",
+    ),
     "signUpTitle": m1,
   };
 }
