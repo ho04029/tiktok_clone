@@ -25,6 +25,7 @@ class TiktokApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TiktokApp',
+      // locale: Locale("en"),
       localizationsDelegates: [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -108,7 +109,7 @@ class TiktokApp extends StatelessWidget {
         ),
         bottomAppBarTheme: BottomAppBarTheme(color: Colors.grey.shade900),
       ),
-      home: SettingsScreen(),
+      home: MainNavigationScreen(),
     );
   }
 }
