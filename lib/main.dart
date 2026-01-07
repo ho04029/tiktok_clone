@@ -109,7 +109,7 @@ class TiktokApp extends StatelessWidget {
         ),
         bottomAppBarTheme: BottomAppBarTheme(color: Colors.grey.shade900),
       ),
-      home: MainNavigationScreen(),
+      home: SignUpScreen(),
     );
   }
 }

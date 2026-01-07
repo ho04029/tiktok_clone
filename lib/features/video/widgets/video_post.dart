@@ -190,14 +190,14 @@ class _VideoPostState extends State<VideoPost>
                 Gaps.v24,
                 VideoButton(
                   icon: FontAwesomeIcons.solidHeart,
-                  text: S.of(context).likeCount,
+                  text: S.of(context).likeCount(8989898989),
                 ),
                 Gaps.v24,
                 GestureDetector(
                   onTap: () => _onCommentsTap(context),
                   child: VideoButton(
                     icon: FontAwesomeIcons.solidComment,
-                    text: "33k",
+                    text: S.of(context).commentCount(656565656),
                   ),
                 ),
                 Gaps.v24,

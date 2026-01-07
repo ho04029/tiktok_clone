@@ -5,5 +5,7 @@
   "appleButton": "Continue with Apple",
   "alreadyHaveAnAccount": "Already have an account?",
   "logIn": "Log in",
-  "likeCount": "2.2M"
+  "likeCount": "{value}",
+  "commentCount": "{value}",
+  "commentTitle": "{value}개의 댓글"
 }

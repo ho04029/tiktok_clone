@@ -119,9 +119,49 @@ class S {
     return Intl.message('Log in', name: 'logIn', desc: '', args: []);
   }
 
-  /// `2.2M`
-  String get likeCount {
-    return Intl.message('2.2M', name: 'likeCount', desc: '', args: []);
+  /// `{value}`
+  String likeCount(int value) {
+    final NumberFormat valueNumberFormat = NumberFormat.compact(
+      locale: Intl.getCurrentLocale(),
+    );
+    final String valueString = valueNumberFormat.format(value);
+
+    return Intl.message(
+      '$valueString',
+      name: 'likeCount',
+      desc: 'like count',
+      args: [valueString],
+    );
+  }
+
+  /// `{value}`
+  String commentCount(int value) {
+    final NumberFormat valueNumberFormat = NumberFormat.compact(
+      locale: Intl.getCurrentLocale(),
+    );
+    final String valueString = valueNumberFormat.format(value);
+
+    return Intl.message(
+      '$valueString',
+      name: 'commentCount',
+      desc: 'comment count',
+      args: [valueString],
+    );
+  }
+
+  /// `{value} {value, plural, =1{comment} other{comments}}`
+  String commentTitle(int value) {
+    final NumberFormat valueNumberFormat = NumberFormat.compact(
+      locale: Intl.getCurrentLocale(),
+    );
+    final String valueString = valueNumberFormat.format(value);
+
+    return Intl.message(
+      '$valueString ${Intl.plural(value, one: 'comment', other: 'comments')}',
+      name: 'commentTitle',
+      desc: 'comment count',
+      args: [valueString],
+    );
   }
 }
 
