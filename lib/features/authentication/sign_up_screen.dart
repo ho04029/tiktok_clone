@@ -12,15 +12,23 @@ class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (context) => const LoginScreen()));
+    Navigator.of(context).pushNamed("/login");
   }
 
   void _onEmailTap(BuildContext context) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (context) => const UsernameScreen()));
+    // Navigator.of(context).push(
+    // MaterialPageRoute(builder: (context) => const UsernameScreen())
+    //   PageRouteBuilder(
+    //     transitionDuration: Duration(seconds: 1),
+    //     reverseTransitionDuration: Duration(seconds: 1),
+    //     pageBuilder:
+    //         (context, animation, secondaryAnimation) => const UsernameScreen(),
+    //     transitionsBuilder:
+    //         (context, animation, secondaryAnimation, child) =>
+    //             FadeTransition(opacity: animation, child: child),
+    //   ),
+    // );
+    Navigator.of(context).pushNamed("/username");
   }
 
   @override
