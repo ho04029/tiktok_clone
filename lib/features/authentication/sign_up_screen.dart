@@ -9,10 +9,11 @@ import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class SignUpScreen extends StatelessWidget {
+  static String routeName = "/";
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) {
-    Navigator.of(context).pushNamed("/login");
+    Navigator.of(context).pushNamed(LoginScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {
@@ -28,7 +29,7 @@ class SignUpScreen extends StatelessWidget {
     //             FadeTransition(opacity: animation, child: child),
     //   ),
     // );
-    Navigator.of(context).pushNamed("/username");
+    Navigator.of(context).pushNamed(UsernameScreen.routeName);
   }
 
   @override
