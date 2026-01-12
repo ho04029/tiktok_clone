@@ -84,7 +84,7 @@ class _EmailScreen extends State<EmailScreen> {
             children: [
               Gaps.v40,
               Text(
-                "What is your email?",
+                "What is your email, ${args.username}?",
                 style: TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
