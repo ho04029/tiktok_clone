@@ -14,7 +14,7 @@ class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) {
-    context.go(LoginScreen.routeName);
+    context.push(LoginScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {

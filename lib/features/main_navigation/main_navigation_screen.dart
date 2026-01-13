@@ -47,7 +47,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           Offstage(offstage: _selectedIdx != 0, child: VideoTimelineScreen()),
           Offstage(offstage: _selectedIdx != 1, child: DiscoverScreen()),
           Offstage(offstage: _selectedIdx != 3, child: InboxScreen()),
-          Offstage(offstage: _selectedIdx != 4, child: UserProfileScreen()),
+          Offstage(
+            offstage: _selectedIdx != 4,
+            child: UserProfileScreen(username: 'user', tab: ""),
+          ),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
