@@ -11,11 +11,23 @@ class VideoRecordingScreen extends StatefulWidget {
   State<VideoRecordingScreen> createState() => _VideoRecordingScreenState();
 }
 
-class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
+class _VideoRecordingScreenState extends State<VideoRecordingScreen>
+    with SingleTickerProviderStateMixin {
   bool _hasPermission = false;
 
   bool _isSelfieMode = false;
 
+  late final AnimationController _animationController = AnimationController(
+    vsync: this,
+    duration: Duration(milliseconds: 300),
+  );
+
+  late final Animation<double> _buttonAnimation = Tween(
+    begin: 1.0,
+    end: 1.3,
+  ).animate(_animationController);
+
+  late FlashMode _flashMode;
   late CameraController _cameraController;
 
   Future<void> initCamera() async {
@@ -34,6 +46,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
 
     // 카메라 컨트롤러 초기화
     await _cameraController.initialize();
+
+    _flashMode = _cameraController.value.flashMode;
   }
 
   Future<void> initPermissions() async {
@@ -62,6 +76,20 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
     _isSelfieMode = !_isSelfieMode;
     await initCamera();
     setState(() {});
+  }
+
+  Future<void> _setFlashMode(FlashMode newFlashMode) async {
+    await _cameraController.setFlashMode(newFlashMode);
+    _flashMode = newFlashMode;
+    setState(() {});
+  }
+
+  void _onTapDown(TapDownDetails _) {
+    _animationController.forward();
+  }
+
+  void _onTapUp(TapUpDetails _) {
+    _animationController.reverse();
   }
 
   @override
@@ -93,11 +121,69 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
                     CameraPreview(_cameraController),
                     Positioned(
                       top: Sizes.size20,
-                      left: Sizes.size20,
-                      child: IconButton(
-                        color: Colors.white,
-                        onPressed: _toggleSelfieMode,
-                        icon: const Icon(Icons.cameraswitch),
+                      right: Sizes.size20,
+                      child: Column(
+                        children: [
+                          IconButton(
+                            color: Colors.white,
+                            onPressed: _toggleSelfieMode,
+                            icon: const Icon(Icons.cameraswitch),
+                          ),
+                          Gaps.v10,
+                          IconButton(
+                            color:
+                                _flashMode == FlashMode.off
+                                    ? Colors.amber.shade200
+                                    : Colors.white,
+                            onPressed: () => _setFlashMode(FlashMode.off),
+                            icon: const Icon(Icons.flash_off_rounded),
+                          ),
+                          Gaps.v10,
+                          IconButton(
+                            color:
+                                _flashMode == FlashMode.always
+                                    ? Colors.amber.shade200
+                                    : Colors.white,
+                            onPressed: () => _setFlashMode(FlashMode.always),
+                            icon: const Icon(Icons.flash_on_rounded),
+                          ),
+                          Gaps.v10,
+                          IconButton(
+                            color:
+                                _flashMode == FlashMode.auto
+                                    ? Colors.amber.shade200
+                                    : Colors.white,
+                            onPressed: () => _setFlashMode(FlashMode.auto),
+                            icon: const Icon(Icons.flash_auto_rounded),
+                          ),
+                          Gaps.v10,
+                          IconButton(
+                            color:
+                                _flashMode == FlashMode.torch
+                                    ? Colors.amber.shade200
+                                    : Colors.white,
+                            onPressed: () => _setFlashMode(FlashMode.torch),
+                            icon: const Icon(Icons.flashlight_on_rounded),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      bottom: Sizes.size40,
+                      child: ScaleTransition(
+                        scale: _buttonAnimation,
+                        child: GestureDetector(
+                          onTapDown: _onTapDown,
+                          onTapUp: _onTapUp,
+                          child: Container(
+                            width: Sizes.size80,
+                            height: Sizes.size80,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.red.shade400,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ],
