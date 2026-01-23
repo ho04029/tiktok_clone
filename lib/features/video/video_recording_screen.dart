@@ -124,11 +124,21 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
 
     final video = await _cameraController.stopVideoRecording();
 
+    if (!mounted) return;
+
     // 비디오 파일 생성 후 다른 페이지로 넘겨주기
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => VideoPreviewScreen(video: video)),
     );
+  }
+
+  @override
+  void dispose() {
+    _progressAnimationController.dispose();
+    _buttonAnimationController.dispose();
+    _cameraController.dispose();
+    super.dispose();
   }
 
   @override
@@ -211,31 +221,35 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                       bottom: Sizes.size40,
                       child: ScaleTransition(
                         scale: _buttonAnimation,
-                        child: GestureDetector(
-                          onTapDown: _startRecording,
-                          onTapUp: (details) => _stopRecording(),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              SizedBox(
-                                width: Sizes.size80 + Sizes.size14,
-                                height: Sizes.size80 + Sizes.size14,
-                                child: CircularProgressIndicator(
-                                  color: Colors.red.shade400,
-                                  strokeWidth: Sizes.size6,
-                                  value: _progressAnimationController.value,
-                                ),
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTapDown: _startRecording,
+                              onTapUp: (details) => _stopRecording(),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: Sizes.size80 + Sizes.size14,
+                                    height: Sizes.size80 + Sizes.size14,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.red.shade400,
+                                      strokeWidth: Sizes.size6,
+                                      value: _progressAnimationController.value,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: Sizes.size80,
+                                    height: Sizes.size80,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.red.shade400,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Container(
-                                width: Sizes.size80,
-                                height: Sizes.size80,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.red.shade400,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

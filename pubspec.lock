@@ -173,6 +173,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "10.8.0"
+  gallery_saver_plus:
+    dependency: "direct main"
+    description:
+      name: gallery_saver_plus
+      sha256: "7f06395ff35698196b96d8db8c63149c0144dc119ccddd7a59c95a08cc983858"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   go_router:
     dependency: "direct main"
     description:
