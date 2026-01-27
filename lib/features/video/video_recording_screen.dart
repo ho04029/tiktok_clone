@@ -15,7 +15,7 @@ class VideoRecordingScreen extends StatefulWidget {
 }
 
 class _VideoRecordingScreenState extends State<VideoRecordingScreen>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   bool _hasPermission = false;
 
   bool _isSelfieMode = false;
@@ -38,6 +38,42 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
 
   late FlashMode _flashMode;
   late CameraController _cameraController;
+
+  @override
+  void initState() {
+    super.initState();
+    initPermissions();
+    WidgetsBinding.instance.addObserver(this);
+    // 애니메이션 값이 변화하는 것을 감지
+    _progressAnimationController.addListener(() {
+      setState(() {});
+    });
+    // 애니메이션이 끝난 것을 감지
+    _progressAnimationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _stopRecording();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _progressAnimationController.dispose();
+    _buttonAnimationController.dispose();
+    _cameraController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.inactive) {
+      if (!_cameraController.value.isInitialized) return;
+      _cameraController.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      await initCamera();
+      setState(() {});
+    }
+  }
 
   Future<void> initCamera() async {
     final cameras = await availableCameras();
@@ -75,22 +111,6 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
       _hasPermission = true;
       setState(() {});
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    initPermissions();
-    // 애니메이션 값이 변화하는 것을 감지
-    _progressAnimationController.addListener(() {
-      setState(() {});
-    });
-    // 애니메이션이 끝난 것을 감지
-    _progressAnimationController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _stopRecording();
-      }
-    });
   }
 
   // 비동기함수로 사용할 예정
@@ -135,14 +155,6 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
         builder: (context) => VideoPreviewScreen(video: video, isPicked: false),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _progressAnimationController.dispose();
-    _buttonAnimationController.dispose();
-    _cameraController.dispose();
-    super.dispose();
   }
 
   Future<void> _onPickVideoPressed() async {
