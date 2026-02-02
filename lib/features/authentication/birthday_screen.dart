@@ -32,7 +32,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    context.pushReplacementNamed(InterestsScreen.routeName);
+    context.goNamed(InterestsScreen.routeName);
   }
 
   //날짜 컨트롤러에 할당해주기
