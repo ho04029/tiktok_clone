@@ -11,9 +11,7 @@ class InboxScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void onDMPressed(BuildContext context) {
-      Navigator.of(
-        context,
-      ).push(MaterialPageRoute(builder: (context) => ChatsScreen()));
+      context.pushNamed(ChatsScreen.routeName);
     }
 
     void onActivityTap(BuildContext context) {
