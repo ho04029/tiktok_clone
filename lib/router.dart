@@ -60,6 +60,7 @@ final router = GoRouter(
       path: VideoRecordingScreen.routeURL,
       pageBuilder:
           (context, state) => CustomTransitionPage(
+            transitionDuration: Duration(microseconds: 200),
             child: VideoRecordingScreen(),
             transitionsBuilder: (
               context,
