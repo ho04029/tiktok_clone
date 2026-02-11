@@ -155,11 +155,9 @@ class _VideoPostState extends State<VideoPost>
           ),
           Positioned(
             child: IconButton(
-              onPressed: () {
-                context.read<VideoConfig>().toggleIsMuted();
-              },
+              onPressed: () {},
               icon: FaIcon(
-                context.watch<VideoConfig>().isMuted
+                false
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
               ),
