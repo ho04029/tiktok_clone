@@ -46,8 +46,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   (value) => context
                       .read<PlaybackConfigViewModel>()
                       .setAutoplay(value),
-              title: Text("Auto Mute"),
-              subtitle: Text("Videos muted by default"),
+              title: Text("Autoplay"),
+              subtitle: Text("Video will start playing automatically"),
             ),
             SwitchListTile(
               value: _notifications,
