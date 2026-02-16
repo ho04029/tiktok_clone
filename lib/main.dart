@@ -19,16 +19,7 @@ void main() async {
   final preferences = await SharedPreferences.getInstance();
   final repository = PlaybackConfigRepository(preferences);
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => PlaybackConfigViewModel(repository),
-        ),
-      ],
-      child: TiktokApp(),
-    ),
-  );
+  runApp(ProviderScope(child: TiktokApp()));
 }
 
 class TiktokApp extends StatelessWidget {
