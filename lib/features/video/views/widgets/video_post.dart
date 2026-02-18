@@ -65,10 +65,6 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
-
-    context.read<PlaybackConfigViewModel>().addListener(
-      _onPlaybackConfigChanged,
-    );
   }
 
   @override
@@ -79,8 +75,7 @@ class _VideoPostState extends State<VideoPost>
 
   void _onPlaybackConfigChanged() {
     if (!mounted) return;
-    final muted = context.read<PlaybackConfigViewModel>().muted;
-    if (muted) {
+    if (false) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(1);
@@ -92,9 +87,8 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
       if (kIsWeb) _videoPlayerController.setVolume(0);
-      if (autoplay) {
+      if (false) {
         _videoPlayerController.play();
       }
     }
@@ -172,13 +166,9 @@ class _VideoPostState extends State<VideoPost>
           ),
           Positioned(
             child: IconButton(
-              onPressed: () {
-                context.read<PlaybackConfigViewModel>().setMuted(
-                  !context.watch<PlaybackConfigViewModel>().muted,
-                );
-              },
+              onPressed: () {},
               icon: FaIcon(
-                context.watch<PlaybackConfigViewModel>().muted
+                false
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
               ),
