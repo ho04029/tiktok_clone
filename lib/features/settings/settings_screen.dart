@@ -1,30 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:tiktok_clone/features/video/view_models/playback_config_vm.dart';
-// import 'package:provider/provider.dart';
-// import 'package:tiktok_clone/common/widgets/video_configuration/video_config.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-  bool _notifications = false;
-
-  void _onNotificationsChanged(bool? newValue) {
-    if (newValue == null) return;
-    setState(() {
-      _notifications = newValue;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Localizations.override(
       context: context,
       locale: Locale("es"),
@@ -33,27 +17,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
         body: ListView(
           children: [
             SwitchListTile(
-              value: false,
-              onChanged: (value) => {},
+              value: ref.watch(playbackConfigProvider).muted,
+              onChanged:
+                  (value) => {
+                    ref.read(playbackConfigProvider.notifier).setMuted(value),
+                  },
               title: Text("Mute Video"),
               subtitle: Text("Video will be muted by default"),
             ),
             SwitchListTile(
-              value: false,
-              onChanged: (value) => {},
+              value: ref.watch(playbackConfigProvider).autoplay,
+              onChanged:
+                  (value) => {
+                    ref
+                        .read(playbackConfigProvider.notifier)
+                        .setAutoplay(value),
+                  },
               title: Text("Autoplay"),
               subtitle: Text("Video will start playing automatically"),
             ),
             SwitchListTile(
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
+              value: false,
+              onChanged: (value) {},
               title: Text("Enable notifications"),
               subtitle: Text("Enable notifications"),
             ),
             CheckboxListTile(
               activeColor: Colors.black,
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
+              value: false,
+              onChanged: (value) {},
               title: Text("Enable notifications"),
               subtitle: Text("Enable notifications"),
             ),
