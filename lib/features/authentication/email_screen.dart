@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/password_screen.dart';
+import 'package:tiktok_clone/features/authentication/view_models/signup_view_model.dart';
 import 'package:tiktok_clone/features/authentication/widgets/from_button.dart';
 
 class EmailScreenArgs {
@@ -10,16 +12,16 @@ class EmailScreenArgs {
   EmailScreenArgs({required this.username});
 }
 
-class EmailScreen extends StatefulWidget {
+class EmailScreen extends ConsumerStatefulWidget {
   final String username;
 
   const EmailScreen({super.key, required this.username});
 
   @override
-  State<EmailScreen> createState() => _EmailScreen();
+  ConsumerState<EmailScreen> createState() => _EmailScreen();
 }
 
-class _EmailScreen extends State<EmailScreen> {
+class _EmailScreen extends ConsumerState<EmailScreen> {
   final TextEditingController _emailController = TextEditingController();
 
   String _email = "";
@@ -61,6 +63,7 @@ class _EmailScreen extends State<EmailScreen> {
   void _onSubmit() {
     //이메일이 적혀저 있지 않거나 유효하지 않으면 아무 동작도 하지 않음
     if (_email.isEmpty || _isEmailValid() != null) return;
+    ref.read(signUpForm.notifier).state = {"email": _email};
     //유효하면 비밀번호 입력 페이지로 넘겨줌
     Navigator.push(
       context,

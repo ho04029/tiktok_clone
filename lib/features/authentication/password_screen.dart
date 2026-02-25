@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/birthday_screen.dart';
+import 'package:tiktok_clone/features/authentication/view_models/signup_view_model.dart';
 import 'package:tiktok_clone/features/authentication/widgets/from_button.dart';
 
-class PasswordScreen extends StatefulWidget {
+class PasswordScreen extends ConsumerStatefulWidget {
   const PasswordScreen({super.key});
 
   @override
-  State<PasswordScreen> createState() => _PasswordScreen();
+  ConsumerState<PasswordScreen> createState() => _PasswordScreen();
 }
 
-class _PasswordScreen extends State<PasswordScreen> {
+class _PasswordScreen extends ConsumerState<PasswordScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   String _password = "";
@@ -45,7 +47,9 @@ class _PasswordScreen extends State<PasswordScreen> {
   }
 
   void _onSubmit() {
-    if (_isPasswordValid()) return;
+    if (!_isPasswordValid()) return;
+    final state = ref.read(signUpForm.notifier).state;
+    ref.read(signUpForm.notifier).state = {...state, "password": _password};
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const BirthdayScreen()),
@@ -128,10 +132,9 @@ class _PasswordScreen extends State<PasswordScreen> {
                   FaIcon(
                     FontAwesomeIcons.circleCheck,
                     size: Sizes.size20,
-                    color:
-                        _isPasswordValid()
-                            ? Colors.green
-                            : Colors.grey.shade400,
+                    color: _isPasswordValid()
+                        ? Colors.green
+                        : Colors.grey.shade400,
                   ),
                   Gaps.h5,
                   Text(
