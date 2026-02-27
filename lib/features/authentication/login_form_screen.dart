@@ -21,7 +21,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
 
-        context.goNamed(InterestsScreen.routeName);
+        // context.goNamed(InterestsScreen.routeName);
       }
     }
   }
@@ -42,10 +42,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                 validator: (value) {
                   return null;
                 },
-                onSaved:
-                    (newValue) => {
-                      if (newValue != null) {formData['email'] = newValue},
-                    },
+                onSaved: (newValue) => {
+                  if (newValue != null) {formData['email'] = newValue},
+                },
               ),
               Gaps.v16,
               TextFormField(
@@ -53,10 +52,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                 validator: (value) {
                   return null;
                 },
-                onSaved:
-                    (newValue) => {
-                      if (newValue != null) {formData['password'] = newValue},
-                    },
+                onSaved: (newValue) => {
+                  if (newValue != null) {formData['password'] = newValue},
+                },
               ),
               Gaps.v28,
               GestureDetector(
