@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/features/authentication/repos/authentication_repo.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class LoginViewModel extends AsyncNotifier {
   late final AuthenticationRepo _repository;
@@ -11,13 +14,19 @@ class LoginViewModel extends AsyncNotifier {
     _repository = ref.read(authRepo);
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> login(
+      String email, String password, BuildContext context) async {
     state = AsyncValue.loading();
     state = await AsyncValue.guard(
         () async => await _repository.signIn(email, password));
+    if (state.hasError) {
+      showFirebaseErrorSnack(context, state.error);
+    } else {
+      context.go("/home");
+    }
   }
 }
 
-final LoginProvider = AsyncNotifierProvider<LoginViewModel, void>(
+final loginProvider = AsyncNotifierProvider<LoginViewModel, void>(
   () => LoginViewModel(),
 );
