@@ -23,7 +23,7 @@ class SignupViewModel extends AsyncNotifier<void> {
     state = await AsyncValue.guard(() async {
       final userCredential =
           await _authRepo.signUp(form["email"], form["password"]);
-      await users.createAccount(userCredential);
+      await users.createProfile(userCredential);
     });
     if (state.hasError) {
       showFirebaseErrorSnack(context, state.error);
