@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -21,6 +22,12 @@ class UserRepository {
   Future<void> uploadAvatar(File file, String fileName) async {
     final fileRef = _storage.ref().child("avatars/$fileName");
     await fileRef.putFile(file);
+  }
+
+  Future<void> uploadAvatarWeb(Uint8List bytes, String fileName) async {
+    final fileRef = _storage.ref().child("avatars/$fileName.jpg");
+
+    await fileRef.putData(bytes);
   }
 }
 

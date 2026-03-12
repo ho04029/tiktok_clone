@@ -35,6 +35,7 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
     state = AsyncValue.loading();
 
     final profile = UserProfileModel(
+        hasAvatar: false,
         uid: credential.user!.uid,
         email: credential.user!.email ?? "anon@anon.com",
         name: credential.user!.displayName ?? "Anon",

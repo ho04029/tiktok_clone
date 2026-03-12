@@ -4,9 +4,11 @@ class UserProfileModel {
   final String name;
   final String bio;
   final String link;
+  final bool hasAvatar;
 
   UserProfileModel(
-      {required this.uid,
+      {required this.hasAvatar,
+      required this.uid,
       required this.email,
       required this.name,
       required this.bio,
@@ -17,14 +19,16 @@ class UserProfileModel {
         email = "",
         name = "",
         bio = "",
-        link = "";
+        link = "",
+        hasAvatar = false;
 
   UserProfileModel.fromJson(Map<String, dynamic> json)
       : uid = json["uid"],
         email = json["email"],
         name = json["name"],
         bio = json["bio"],
-        link = json["link"];
+        link = json["link"],
+        hasAvatar = json["hasAvatar"];
 
   Map<String, String> toJson() {
     return {
