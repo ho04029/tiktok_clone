@@ -8,8 +8,15 @@ import 'package:tiktok_clone/features/users/view_models/avatar_view_model.dart';
 
 class Avatar extends ConsumerWidget {
   final String name;
+  final bool hasAvatar;
+  final String uid;
 
-  const Avatar(this.name, {super.key});
+  const Avatar({
+    super.key,
+    required this.name,
+    required this.hasAvatar,
+    required this.uid,
+  });
 
   Future<void> _onAvatarTap(WidgetRef ref) async {
     final xfile = await ImagePicker().pickImage(
@@ -47,9 +54,11 @@ class Avatar extends ConsumerWidget {
           : CircleAvatar(
               radius: 50,
               foregroundColor: Colors.blue,
-              foregroundImage: NetworkImage(
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsv_pZL9XVHMiLKMnV89B1LauRL2t1nis-LeK96R_yOtlAjBF8s1LSpMJHVPoFFrq1wlg&usqp=CAU",
-              ),
+              foregroundImage: hasAvatar
+                  ? NetworkImage(
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsv_pZL9XVHMiLKMnV89B1LauRL2t1nis-LeK96R_yOtlAjBF8s1LSpMJHVPoFFrq1wlg&usqp=CAU",
+                    )
+                  : null,
               child: Text(name),
             ),
     );
