@@ -40,9 +40,20 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
         email: credential.user!.email ?? "anon@anon.com",
         name: credential.user!.displayName ?? "Anon",
         bio: "undefined",
-        link: "undefined");
+        link: "undefined",
+        avatarUrl: "undefined");
     await _userRepository.createProfile(profile);
     state = AsyncValue.data(profile);
+  }
+
+  Future<void> onAvatarUpload(String avatarUrl) async {
+    if (state.value == null) return;
+    state = AsyncValue.data(
+        state.value!.copyWith(hasAvatar: true, avatarUrl: avatarUrl));
+    await _userRepository.updateUser(state.value!.uid, {
+      "hasAvatar": true,
+      "avatarUrl": avatarUrl,
+    });
   }
 }
 

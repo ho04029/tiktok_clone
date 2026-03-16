@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/features/authentication/repos/authentication_repo.dart';
 import 'package:tiktok_clone/features/users/repos/user_repository.dart';
+import 'package:tiktok_clone/features/users/view_models/user_view_model.dart';
 
 class AvatarViewModel extends AsyncNotifier {
   late final UserRepository _repository;
@@ -17,8 +18,11 @@ class AvatarViewModel extends AsyncNotifier {
   Future<void> uploadAvatar(File file) async {
     state = AsyncValue.loading();
     final fileName = ref.read(authRepo).user!.uid;
-    state = await AsyncValue.guard(
-        () async => await _repository.uploadAvatar(file, fileName));
+    state = await AsyncValue.guard(() async {
+      final avatarUrl = await _repository.uploadAvatar(file, fileName);
+      await _repository.updateAvatarUrl(fileName, avatarUrl);
+      ref.read(userProvider.notifier).onAvatarUpload(avatarUrl);
+    });
   }
 
   Future<void> uploadAvatarWeb(Uint8List bytes) async {
@@ -26,9 +30,11 @@ class AvatarViewModel extends AsyncNotifier {
 
     final fileName = ref.read(authRepo).user!.uid;
 
-    state = await AsyncValue.guard(
-      () => _repository.uploadAvatarWeb(bytes, fileName),
-    );
+    state = await AsyncValue.guard(() async {
+      final avatarUrl = await _repository.uploadAvatarWeb(bytes, fileName);
+      await _repository.updateAvatarUrl(fileName, avatarUrl);
+      ref.read(userProvider.notifier).onAvatarUpload(avatarUrl);
+    });
   }
 }
 

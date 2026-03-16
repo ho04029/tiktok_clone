@@ -19,15 +19,38 @@ class UserRepository {
     return doc.data();
   }
 
-  Future<void> uploadAvatar(File file, String fileName) async {
+  Future<String> uploadAvatar(File file, String fileName) async {
     final fileRef = _storage.ref().child("avatars/$fileName");
-    await fileRef.putFile(file);
+    final metadata = SettableMetadata(
+      contentType: "image/jpeg",
+    );
+    final task = await fileRef.putFile(file, metadata);
+
+    final url = await task.ref.getDownloadURL();
+
+    return url;
   }
 
-  Future<void> uploadAvatarWeb(Uint8List bytes, String fileName) async {
-    final fileRef = _storage.ref().child("avatars/$fileName.jpg");
+  Future<String> uploadAvatarWeb(Uint8List bytes, String fileName) async {
+    final fileRef = _storage.ref().child("avatars/$fileName");
+    final metadata = SettableMetadata(
+      contentType: "image/jpeg",
+    );
+    final task = await fileRef.putData(bytes, metadata);
 
-    await fileRef.putData(bytes);
+    final url = await task.ref.getDownloadURL();
+
+    return url;
+  }
+
+  Future<void> updateUser(String uid, Map<String, dynamic> data) async {
+    await _db.collection("users").doc(uid).update(data);
+  }
+
+  Future<void> updateAvatarUrl(String uid, String url) async {
+    await _db.collection("users").doc(uid).update({
+      "avatarUrl": url,
+    });
   }
 }
 

@@ -63,9 +63,11 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                           children: [
                             Gaps.v20,
                             Avatar(
-                                name: data.name,
-                                hasAvatar: data.hasAvatar,
-                                uid: data.uid),
+                              name: data.name,
+                              hasAvatar: data.hasAvatar,
+                              uid: data.uid,
+                              avatarUrl: data.avatarUrl,
+                            ),
                             Gaps.v20,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,

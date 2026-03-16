@@ -5,6 +5,7 @@ class UserProfileModel {
   final String bio;
   final String link;
   final bool hasAvatar;
+  final String avatarUrl;
 
   UserProfileModel(
       {required this.hasAvatar,
@@ -12,7 +13,8 @@ class UserProfileModel {
       required this.email,
       required this.name,
       required this.bio,
-      required this.link});
+      required this.link,
+      required this.avatarUrl});
 
   UserProfileModel.empty()
       : uid = "",
@@ -20,7 +22,8 @@ class UserProfileModel {
         name = "",
         bio = "",
         link = "",
-        hasAvatar = false;
+        hasAvatar = false,
+        avatarUrl = "";
 
   UserProfileModel.fromJson(Map<String, dynamic> json)
       : uid = json["uid"],
@@ -28,7 +31,8 @@ class UserProfileModel {
         name = json["name"],
         bio = json["bio"],
         link = json["link"],
-        hasAvatar = json["hasAvatar"] ?? false;
+        hasAvatar = json["hasAvatar"] ?? false,
+        avatarUrl = json["avatarUrl"] ?? "";
 
   Map<String, String> toJson() {
     return {
@@ -40,20 +44,22 @@ class UserProfileModel {
     };
   }
 
-  UserProfileModel copyWith(
+  UserProfileModel copyWith({
     String? uid,
     String? email,
     String? name,
     String? bio,
     String? link,
     bool? hasAvatar,
-  ) {
+    String? avatarUrl,
+  }) {
     return UserProfileModel(
         hasAvatar: hasAvatar ?? this.hasAvatar,
         uid: uid ?? this.uid,
         email: email ?? this.email,
         name: name ?? this.name,
         bio: bio ?? this.bio,
-        link: link ?? this.link);
+        link: link ?? this.link,
+        avatarUrl: avatarUrl ?? this.avatarUrl);
   }
 }

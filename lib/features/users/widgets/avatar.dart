@@ -10,12 +10,14 @@ class Avatar extends ConsumerWidget {
   final String name;
   final bool hasAvatar;
   final String uid;
+  final String avatarUrl;
 
   const Avatar({
     super.key,
     required this.name,
     required this.hasAvatar,
     required this.uid,
+    required this.avatarUrl,
   });
 
   Future<void> _onAvatarTap(WidgetRef ref) async {
@@ -54,11 +56,7 @@ class Avatar extends ConsumerWidget {
           : CircleAvatar(
               radius: 50,
               foregroundColor: Colors.blue,
-              foregroundImage: hasAvatar
-                  ? NetworkImage(
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsv_pZL9XVHMiLKMnV89B1LauRL2t1nis-LeK96R_yOtlAjBF8s1LSpMJHVPoFFrq1wlg&usqp=CAU",
-                    )
-                  : null,
+              foregroundImage: hasAvatar ? NetworkImage(avatarUrl) : null,
               child: Text(name),
             ),
     );
