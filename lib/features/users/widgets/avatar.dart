@@ -56,7 +56,9 @@ class Avatar extends ConsumerWidget {
           : CircleAvatar(
               radius: 50,
               foregroundColor: Colors.blue,
-              foregroundImage: hasAvatar ? NetworkImage(avatarUrl) : null,
+              foregroundImage: hasAvatar
+                  ? NetworkImage("$avatarUrl&date=${DateTime.now().toString()}")
+                  : null,
               child: Text(name),
             ),
     );
