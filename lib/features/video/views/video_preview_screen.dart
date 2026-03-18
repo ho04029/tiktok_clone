@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver_plus/gallery_saver.dart';
 import 'package:tiktok_clone/features/video/view_models/timeline_view_model.dart';
+import 'package:tiktok_clone/features/video/view_models/upload_video_view_model.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPreviewScreen extends ConsumerStatefulWidget {
@@ -48,7 +49,7 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
   }
 
   void _onUploadPressed() {
-    ref.read(timelineProvider.notifier).uploadVideo();
+    ref.read(uploadVideoProvider.notifier).uploadVideo(File(widget.video.path));
   }
 
   @override
@@ -77,39 +78,36 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
               ),
             ),
           IconButton(
-            onPressed:
-                ref.watch(timelineProvider).isLoading
-                    ? () {}
-                    : _onUploadPressed,
-            icon:
-                ref.watch(timelineProvider).isLoading
-                    ? CircularProgressIndicator()
-                    : FaIcon(FontAwesomeIcons.cloudArrowUp),
+            onPressed: ref.watch(uploadVideoProvider).isLoading
+                ? () {}
+                : _onUploadPressed,
+            icon: ref.watch(uploadVideoProvider).isLoading
+                ? CircularProgressIndicator()
+                : FaIcon(FontAwesomeIcons.cloudArrowUp),
           ),
         ],
       ),
-      body:
-          _videoPlayerController.value.isInitialized == true
-              ? Stack(
-                alignment: Alignment.center,
-                children: [
-                  Positioned(
-                    top: 0,
-                    left: -MediaQuery.of(context).size.width / 2,
-                    right: -MediaQuery.of(context).size.width / 2,
-                    bottom: 0,
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: SizedBox(
-                        width: _videoPlayerController.value.size.width,
-                        height: _videoPlayerController.value.size.height,
-                        child: VideoPlayer(_videoPlayerController),
-                      ),
+      body: _videoPlayerController.value.isInitialized == true
+          ? Stack(
+              alignment: Alignment.center,
+              children: [
+                Positioned(
+                  top: 0,
+                  left: -MediaQuery.of(context).size.width / 2,
+                  right: -MediaQuery.of(context).size.width / 2,
+                  bottom: 0,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: SizedBox(
+                      width: _videoPlayerController.value.size.width,
+                      height: _videoPlayerController.value.size.height,
+                      child: VideoPlayer(_videoPlayerController),
                     ),
                   ),
-                ],
-              )
-              : const Center(child: CircularProgressIndicator()),
+                ),
+              ],
+            )
+          : const Center(child: CircularProgressIndicator()),
     );
   }
 }
