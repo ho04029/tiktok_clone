@@ -49,7 +49,9 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
   }
 
   void _onUploadPressed() {
-    ref.read(uploadVideoProvider.notifier).uploadVideo(File(widget.video.path));
+    ref
+        .read(uploadVideoProvider.notifier)
+        .uploadVideo(File(widget.video.path), context);
   }
 
   @override

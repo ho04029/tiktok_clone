@@ -25,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         return windows;
       case TargetPlatform.linux:
@@ -76,6 +73,15 @@ class DefaultFirebaseOptions {
     projectId: 'tiktok-clone-lee',
     authDomain: 'tiktok-clone-lee.firebaseapp.com',
     storageBucket: 'tiktok-clone-lee.firebasestorage.app',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDbC0SWm0F0IPy0kZh-eby_DNEG3LQQ2-g',
+    appId: '1:693513486039:ios:c5b4d68e2b3ab0a0857a92',
+    messagingSenderId: '693513486039',
+    projectId: 'tiktok-clone-lee',
+    storageBucket: 'tiktok-clone-lee.firebasestorage.app',
+    iosBundleId: 'com.example.tiktokClone',
   );
 
 }
