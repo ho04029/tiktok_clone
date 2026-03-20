@@ -18,9 +18,26 @@ export const onVideoCreated = onDocumentCreated(
     region: "asia-northeast3",
   },
   async (event) => {
+    const spawn = require("child-process-promise").spawn;
     const snapshot = event.data;
     if (!snapshot) return;
+    const video = snapshot.data();
+    await spawn("ffmpeg", [
+      "-i",
+      video.fileUrl,
+      "-ss",
+      "00:00:01.000",
+      "-vframes",
+      "1",
+      "-vf",
+      "scale=150:-1",
+      `/tmp/${snapshot.id}.jpg`,
+    ]);
 
-    await snapshot.ref.update({ hello: "from functions" });
+    const storage = admin.storage();
+    await storage.bucket().upload(`/tmp/${snapshot.id}.jpg`, {
+      destination: `thumbnails/${snapshot.id}.jpg`,
+    });
+    // await snapshot.ref.update({ hello: "from functions" });
   },
 );
