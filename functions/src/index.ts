@@ -35,9 +35,17 @@ export const onVideoCreated = onDocumentCreated(
     ]);
 
     const storage = admin.storage();
-    await storage.bucket().upload(`/tmp/${snapshot.id}.jpg`, {
+    const [file, _] = await storage.bucket().upload(`/tmp/${snapshot.id}.jpg`, {
       destination: `thumbnails/${snapshot.id}.jpg`,
     });
-    // await snapshot.ref.update({ hello: "from functions" });
+    await file.makePublic();
+    await snapshot.ref.update({ thumbnailUrl: file.publicUrl() });
+
+    const db = admin.firestore();
+    db.collection("users")
+      .doc(video.creatorUid)
+      .collection("videos")
+      .doc(snapshot.id)
+      .set({ thumbnailUrl: file.publicUrl(), videoId: snapshot.id });
   },
 );
