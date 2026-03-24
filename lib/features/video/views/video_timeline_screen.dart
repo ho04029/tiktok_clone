@@ -47,35 +47,32 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ref
-        .watch(timelineProvider)
-        .when(
+    return ref.watch(timelineProvider).when(
           loading: () => Center(child: CircularProgressIndicator()),
-          error:
-              (error, stackTrace) => Center(
-                child: Text(
-                  "Could not load videos: $error",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-          data:
-              (videos) => RefreshIndicator(
-                onRefresh: _onRefresh,
-                displacement: 40,
-                edgeOffset: 20,
-                color: Theme.of(context).colorScheme.primary,
-                child: PageView.builder(
-                  controller: _pageController,
-                  scrollDirection: Axis.vertical,
-                  onPageChanged: _onPageChanged,
-                  itemCount: videos.length,
-                  itemBuilder:
-                      (context, index) => VideoPost(
-                        onVideoFinished: _onVideoFinished,
-                        index: index,
-                      ),
-                ),
-              ),
+          error: (error, stackTrace) => Center(
+            child: Text(
+              "Could not load videos: $error",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          data: (videos) => RefreshIndicator(
+            onRefresh: _onRefresh,
+            displacement: 40,
+            edgeOffset: 20,
+            color: Theme.of(context).colorScheme.primary,
+            child: PageView.builder(
+                controller: _pageController,
+                scrollDirection: Axis.vertical,
+                onPageChanged: _onPageChanged,
+                itemCount: videos.length,
+                itemBuilder: (context, index) {
+                  final videoData = videos[index];
+                  return VideoPost(
+                      onVideoFinished: _onVideoFinished,
+                      index: index,
+                      videoData: videoData);
+                }),
+          ),
         );
   }
 }

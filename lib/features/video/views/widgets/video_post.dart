@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/video/models/video_model.dart';
 import 'package:tiktok_clone/features/video/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone/features/video/views/widgets/video_button.dart';
 import 'package:tiktok_clone/features/video/views/widgets/video_comments.dart';
@@ -13,11 +14,13 @@ import 'package:tiktok_clone/generated/l10n.dart';
 
 class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinished;
+  final VideoModel videoData;
   final int index;
 
   const VideoPost({
     super.key,
     required this.onVideoFinished,
+    required this.videoData,
     required this.index,
   });
 
@@ -133,12 +136,13 @@ class VideoPostState extends ConsumerState<VideoPost>
       child: Stack(
         children: [
           Positioned.fill(
-            child:
-                _videoPlayerController.value.isInitialized
-                    ? VideoPlayer(_videoPlayerController)
-                    : Container(color: Colors.black),
+            child: _videoPlayerController.value.isInitialized
+                ? VideoPlayer(_videoPlayerController)
+                : Image.network(
+                    widget.videoData.thumbnailUrl,
+                    fit: BoxFit.cover,
+                  ),
           ),
-
           Positioned.fill(child: GestureDetector(onTap: _onTogglePause)),
           Positioned.fill(
             child: IgnorePointer(
@@ -181,7 +185,7 @@ class VideoPostState extends ConsumerState<VideoPost>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "@user",
+                  "@${widget.videoData.creator}",
                   style: TextStyle(
                     fontSize: Sizes.size20,
                     color: Colors.white,
@@ -190,7 +194,7 @@ class VideoPostState extends ConsumerState<VideoPost>
                 ),
                 Gaps.v16,
                 Text(
-                  "hmm",
+                  widget.videoData.descriptions,
                   style: TextStyle(fontSize: Sizes.size16, color: Colors.white),
                 ),
               ],
@@ -208,19 +212,19 @@ class VideoPostState extends ConsumerState<VideoPost>
                   foregroundImage: NetworkImage(
                     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsv_pZL9XVHMiLKMnV89B1LauRL2t1nis-LeK96R_yOtlAjBF8s1LSpMJHVPoFFrq1wlg&usqp=CAU",
                   ),
-                  child: Text("user"),
+                  child: Text(widget.videoData.creator),
                 ),
                 Gaps.v24,
                 VideoButton(
                   icon: FontAwesomeIcons.solidHeart,
-                  text: S.of(context).likeCount(8989898989),
+                  text: S.of(context).likeCount(widget.videoData.likes),
                 ),
                 Gaps.v24,
                 GestureDetector(
                   onTap: () => _onCommentsTap(context),
                   child: VideoButton(
                     icon: FontAwesomeIcons.solidComment,
-                    text: S.of(context).commentCount(656565656),
+                    text: S.of(context).commentCount(widget.videoData.comments),
                   ),
                 ),
                 Gaps.v24,
