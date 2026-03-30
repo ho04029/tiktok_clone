@@ -49,3 +49,39 @@ export const onVideoCreated = onDocumentCreated(
       .set({ thumbnailUrl: file.publicUrl(), videoId: snapshot.id });
   },
 );
+
+export const onLikedCreated = onDocumentCreated(
+  {
+    document: "likes/{likeId}",
+    region: "asia-northeast3",
+  },
+  async (event) => {
+    const db = admin.firestore();
+    const snapshot = event.data;
+    const [videoId, _] = snapshot!.id.split("000");
+    await db
+      .collection("videos")
+      .doc(videoId)
+      .update({
+        likes: admin.firestore.FieldValue.increment(1),
+      });
+  },
+);
+
+export const onLikedRemoved = onDocumentCreated(
+  {
+    document: "likes/{likeId}",
+    region: "asia-northeast3",
+  },
+  async (event) => {
+    const db = admin.firestore();
+    const snapshot = event.data;
+    const [videoId, _] = snapshot!.id.split("000");
+    await db
+      .collection("videos")
+      .doc(videoId)
+      .update({
+        likes: admin.firestore.FieldValue.increment(-1),
+      });
+  },
+);
