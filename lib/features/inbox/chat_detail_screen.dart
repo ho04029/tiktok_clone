@@ -70,10 +70,9 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                   Container(
                     padding: EdgeInsets.all(Sizes.size14),
                     decoration: BoxDecoration(
-                      color:
-                          isMine
-                              ? Colors.blue
-                              : Theme.of(context).colorScheme.primary,
+                      color: isMine
+                          ? Colors.blue
+                          : Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(Sizes.size20),
                         topRight: Radius.circular(Sizes.size20),
