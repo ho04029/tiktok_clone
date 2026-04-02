@@ -68,49 +68,60 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
       ),
       body: Stack(
         children: [
-          ListView.separated(
-            padding: EdgeInsets.symmetric(
-              vertical: Sizes.size20,
-              horizontal: Sizes.size14,
-            ),
-            itemBuilder: (context, index) {
-              final isMine = index % 2 == 0;
-              return Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment:
-                    isMine ? MainAxisAlignment.end : MainAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(Sizes.size14),
-                    decoration: BoxDecoration(
-                      color: isMine
-                          ? Colors.blue
-                          : Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(Sizes.size20),
-                        topRight: Radius.circular(Sizes.size20),
-                        bottomLeft: Radius.circular(
-                          isMine ? Sizes.size20 : Sizes.size5,
-                        ),
-                        bottomRight: Radius.circular(
-                          isMine ? Sizes.size5 : Sizes.size20,
-                        ),
-                      ),
-                    ),
-                    child: Text(
-                      "this is a message!",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: Sizes.size16,
-                      ),
-                    ),
+          ref.watch(chatProvider).when(
+              data: (data) {
+                return ListView.separated(
+                  padding: EdgeInsets.symmetric(
+                    vertical: Sizes.size20,
+                    horizontal: Sizes.size14,
                   ),
-                ],
-              );
-            },
-            separatorBuilder: (context, index) => Gaps.v10,
-            itemCount: 10,
-          ),
+                  itemBuilder: (context, index) {
+                    final message = data[index];
+                    final isMine = index % 2 == 0;
+                    return Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: isMine
+                          ? MainAxisAlignment.end
+                          : MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(Sizes.size14),
+                          decoration: BoxDecoration(
+                            color: isMine
+                                ? Colors.blue
+                                : Theme.of(context).colorScheme.primary,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(Sizes.size20),
+                              topRight: Radius.circular(Sizes.size20),
+                              bottomLeft: Radius.circular(
+                                isMine ? Sizes.size20 : Sizes.size5,
+                              ),
+                              bottomRight: Radius.circular(
+                                isMine ? Sizes.size5 : Sizes.size20,
+                              ),
+                            ),
+                          ),
+                          child: Text(
+                            "this is a message!",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: Sizes.size16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                  separatorBuilder: (context, index) => Gaps.v10,
+                  itemCount: data.length,
+                );
+              },
+              error: (error, stackTrace) => Center(
+                    child: Text(error.toString()),
+                  ),
+              loading: () => Center(
+                    child: CircularProgressIndicator(),
+                  )),
           Positioned(
             bottom: 0,
             width: MediaQuery.of(context).size.width,
