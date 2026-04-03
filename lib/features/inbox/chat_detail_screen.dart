@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/repos/authentication_repo.dart';
 import 'package:tiktok_clone/features/inbox/view_models/messages_view_model.dart';
 
 class ChatDetailScreen extends ConsumerStatefulWidget {
@@ -77,7 +78,8 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                   ),
                   itemBuilder: (context, index) {
                     final message = data[index];
-                    final isMine = index % 2 == 0;
+                    final isMine =
+                        message.userId == ref.watch(authRepo).user!.uid;
                     return Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: isMine
@@ -102,7 +104,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                             ),
                           ),
                           child: Text(
-                            "this is a message!",
+                            message.text,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: Sizes.size16,
