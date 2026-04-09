@@ -41,7 +41,7 @@ class TiktokApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(notificationProvider);
+    ref.watch(notificationProvider(context));
     return MaterialApp.router(
       routerConfig: ref.watch(routerProvider),
       debugShowCheckedModeBanner: false,
