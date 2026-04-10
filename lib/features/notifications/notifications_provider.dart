@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/features/authentication/repos/authentication_repo.dart';
+import 'package:tiktok_clone/features/inbox/chats_screen.dart';
+import 'package:tiktok_clone/features/video/views/video_recording_screen.dart';
 
 class NotificationsProvider extends FamilyAsyncNotifier<void, BuildContext> {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -27,13 +29,13 @@ class NotificationsProvider extends FamilyAsyncNotifier<void, BuildContext> {
 
     // Background 상태일때 실행
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      context.go("/chats");
+      context.pushNamed(ChatsScreen.routeName);
     });
 
     // Terminated 상태일때 실행
     final notification = await _messaging.getInitialMessage();
     if (notification != null) {
-      context.go("/chats");
+      context.pushNamed(VideoRecordingScreen.routeName);
     }
   }
 
