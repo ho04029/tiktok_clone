@@ -65,6 +65,30 @@ export const onLikedCreated = onDocumentCreated(
       .update({
         likes: admin.firestore.FieldValue.increment(1),
       });
+
+    // 좋아요를 누르면 해당 영상의 주인에게 알림이 갈 수 있도록
+    const video = await (
+      await db.collection("videos").doc(videoId).get()
+    ).data();
+    if (video) {
+      const creatorUid = video.creatorUid;
+      const user = await (
+        await db.collection("users").doc(creatorUid).get()
+      ).data();
+      if (user) {
+        const token = user.token;
+        await admin.messaging().send({
+          token: token,
+          data: {
+            screen: "123",
+          },
+          notification: {
+            title: "someone liked your video.",
+            body: "Likes + 1 ! Congrats! 💖",
+          },
+        });
+      }
+    }
   },
 );
 
