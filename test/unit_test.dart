@@ -7,24 +7,59 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:tiktok_clone/features/video/models/video_model.dart';
 
 import 'package:tiktok_clone/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const TiktokApp());
+  group("VideoModel Test", () {
+    test("Test Video Model Constructor", () {
+      final video = VideoModel(
+          id: "id",
+          title: "title",
+          descriptions: "descriptions",
+          fileUrl: "fileUrl",
+          thumbnailUrl: "thumbnailUrl",
+          creatorUid: "creatorUid",
+          creator: "creator",
+          likes: 1,
+          comments: 1,
+          createdAt: 1);
+      expect(video.id, "id");
+    });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    test("Test Video Model .fromJson Constructor", () {
+      final video = VideoModel.fromJson({
+        "id": "id",
+        "title": "title",
+        "descriptions": "descriptions",
+        "fileUrl": "fileUrl",
+        "thumbnailUrl": "thumbnailUrl",
+        "creatorUid": "creatorUid",
+        "creator": "creator",
+        "likes": 1,
+        "comments": 1,
+        "createdAt": 1
+      }, "videoId");
+      expect(video.title, "title");
+      expect(video.comments, isInstanceOf<int>());
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    test("Test Video Model toJson Method", () {
+      final video = VideoModel(
+          id: "id",
+          title: "title",
+          descriptions: "descriptions",
+          fileUrl: "fileUrl",
+          thumbnailUrl: "thumbnailUrl",
+          creatorUid: "creatorUid",
+          creator: "creator",
+          likes: 1,
+          comments: 1,
+          createdAt: 1);
+      final json = video.toJson();
+      expect(json["id"], "id");
+      expect(json["likes"], isInstanceOf<int>());
+    });
   });
 }
