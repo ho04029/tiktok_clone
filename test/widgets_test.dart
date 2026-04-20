@@ -20,5 +20,24 @@ void main() {
         Colors.white,
       );
     };
+
+    testWidgets("Disabled State", (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MediaQuery(
+          data: MediaQueryData(),
+          child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: FormButton(disabled: true),
+      )));
+      expect(find.text("Next"), findsOneWidget);
+      expect(
+        tester
+            .firstWidget<AnimatedDefaultTextStyle>(
+                find.byType(AnimatedDefaultTextStyle))
+            .style
+            .color,
+        Colors.grey.shade400,
+      );
+    });
   });
 }
