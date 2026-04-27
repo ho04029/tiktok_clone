@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tiktok_clone/features/authentication/widgets/from_button.dart';
 
@@ -16,6 +15,13 @@ void main() {
             .firstWidget<AnimatedDefaultTextStyle>(
                 find.byType(AnimatedDefaultTextStyle))
             .style
+            .color,
+        Colors.white,
+      );
+      expect(
+        (tester
+                .firstWidget<AnimatedContainer>(find.byType(AnimatedContainer))
+                .decoration as BoxDecoration)
             .color,
         Colors.white,
       );
@@ -53,6 +59,23 @@ void main() {
                 .decoration as BoxDecoration)
             .color,
         Colors.grey.shade800,
+      );
+    });
+
+    testWidgets("Disabled State LightMode", (WidgetTester tester) async {
+      await tester.pumpWidget(MediaQuery(
+          data: MediaQueryData(platformBrightness: Brightness.light),
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: FormButton(disabled: true),
+          )));
+      expect(find.text("Next"), findsOneWidget);
+      expect(
+        (tester
+                .firstWidget<AnimatedContainer>(find.byType(AnimatedContainer))
+                .decoration as BoxDecoration)
+            .color,
+        Colors.grey.shade300,
       );
     });
   });
