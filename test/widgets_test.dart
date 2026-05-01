@@ -5,10 +5,12 @@ import 'package:tiktok_clone/features/authentication/widgets/from_button.dart';
 void main() {
   group("Enabled State", () {
     (WidgetTester tester) async {
-      await tester.pumpWidget(Directionality(
-        textDirection: TextDirection.ltr,
-        child: FormButton(disabled: false),
-      ));
+      await tester.pumpWidget(Theme(
+          data: ThemeData(primaryColor: Colors.red),
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: FormButton(disabled: false),
+          )));
       expect(find.text("Next"), findsOneWidget);
       expect(
         tester
@@ -23,7 +25,7 @@ void main() {
                 .firstWidget<AnimatedContainer>(find.byType(AnimatedContainer))
                 .decoration as BoxDecoration)
             .color,
-        Colors.white,
+        Colors.red,
       );
     };
 
