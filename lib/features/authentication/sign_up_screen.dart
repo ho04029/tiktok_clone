@@ -49,7 +49,7 @@ class SignUpScreen extends ConsumerWidget {
                   Opacity(
                     opacity: 0.7,
                     child: Text(
-                      S.of(context).signUpSubtitle(19687),
+                      "Sign up for TikTok",
                       style: TextStyle(fontSize: Sizes.size16),
                       textAlign: TextAlign.center,
                     ),
@@ -60,7 +60,7 @@ class SignUpScreen extends ConsumerWidget {
                       onTap: () => _onEmailTap(context),
                       child: AuthButton(
                         icon: FaIcon(FontAwesomeIcons.user),
-                        text: S.of(context).emailPasswordButton,
+                        text: "Use email & password",
                       ),
                     ),
                     Gaps.v16,
@@ -120,7 +120,7 @@ class SignUpScreen extends ConsumerWidget {
                   GestureDetector(
                     onTap: () => _onLoginTap(context),
                     child: Text(
-                      S.of(context).logIn,
+                      "Log in",
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Theme.of(context).colorScheme.primary,
